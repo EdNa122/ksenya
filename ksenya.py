@@ -105,6 +105,7 @@ def fin_btn(call):
         config.CHILD_NUM, config.CHILD_PRICE,str(int(config.PRICE)*int(config.NUM_OF_PERSONS)\
         + int(config.CHILD_PRICE)*int(config.CHILD_NUM)), config.TEL_NUM, config.NAME \
         ,config.DATE]
+        print(len(to_append))
         if config.HOTEL not in config.hotels:
             to_append.append(config.HOTEL)
         a_series = pd.Series(to_append, index = data_frame.columns)
