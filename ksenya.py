@@ -575,7 +575,7 @@ def otchet_finish(call):
 
                 else:
                     df3 = pd.read_excel(file2, \
-                        usecols=['Тур', 'Кол. взр', 'Кол. детей', 'Сумма', 'Телефон', 'Имя','Дата'])
+                        usecols=['Тур', 'Кол. взр', 'Кол. детей', 'Сумма', 'Телефон', 'Имя'])
                     df3 = df3.groupby(by=['Тур']).sum()
                     df3.reset_index(inplace=True)
                     df3.to_excel(file2, index=False)
@@ -599,7 +599,7 @@ def otchet_finish(call):
 
             else:
                 df3 = pd.read_excel(file2, \
-                    usecols=['Тур', 'Кол. взр', 'Кол. детей', 'Сумма', 'Телефон', 'Имя','Дата'])
+                    usecols=['Тур', 'Кол. взр', 'Кол. детей', 'Сумма', 'Телефон', 'Имя'])
                 df3 = df3.groupby(by=['Тур']).sum()
                 df3.reset_index(inplace=True)
                 df3.to_excel(file2, index=False)
