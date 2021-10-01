@@ -795,7 +795,8 @@ def tel(message, message1):
 
 def ochet_date(message, message1):
     """ ochet date """
-    if message1 in config.data:
+    ind = message1.index("-")
+    if message1[:ind] in config.data:
         keyb_och_fin = finish_butttons('ok')
         config.DATE = message1
 
