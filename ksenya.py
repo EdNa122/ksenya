@@ -26,7 +26,7 @@ def messages(message):
     if message1 == "новая заявка":
         new_order(message)
 
-    elif message1 == "удалить заявку":
+    elif message1 == "удалить/редактировать заявку":
         del_order(message)
 
     elif message1 == "отчет":
