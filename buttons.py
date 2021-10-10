@@ -12,7 +12,7 @@ def hotel_buttons(letter : str):
     hotel_5 = types.InlineKeyboardButton(text='Гавана', callback_data=letter + ' havana')
     hotel_6 = types.InlineKeyboardButton(text='Толассо', callback_data=letter + ' olasso')
     hotel_7 = types.InlineKeyboardButton(text='Мадрид парк', callback_data=letter + ' madrid_park')
-    hotel_8 = types.InlineKeyboardButton(text='Орандж хаус', callback_data=letter + ' orange_house')
+    hotel_8 = types.InlineKeyboardButton(text='Оранж хаус', callback_data=letter + ' orange_house')
     hotel_9 = types.InlineKeyboardButton(text='Клевер', callback_data=letter + ' clever')
     hotel_10 = types.InlineKeyboardButton(text='Жемчужена заречя', \
         callback_data=letter + ' jemchujena')
@@ -30,7 +30,7 @@ def tours_buttons(letter : str):
     keyboard = types.InlineKeyboardMarkup()
     tour_1 = types.InlineKeyboardButton(text='Золотое кольцо Абхазии', \
         callback_data=letter + ' zolotoye')
-    tour_2 = types.InlineKeyboardButton(text='Крассная Поляна', callback_data=letter + ' kp')
+    tour_2 = types.InlineKeyboardButton(text='Красная Поляна', callback_data=letter + ' kp')
     tour_3 = types.InlineKeyboardButton(text='Джип тур Абхазия', callback_data=letter + ' jeep')
     tour_4 = types.InlineKeyboardButton(text='33 водопада', callback_data=letter + ' vod33')
     tour_5 = types.InlineKeyboardButton(text='Обзорная по Сочи', callback_data=letter + ' sochi')

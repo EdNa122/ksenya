@@ -1,5 +1,4 @@
 """bot for ksenya"""
-# import datetime
 import os
 import pandas as pd
 import telebot
@@ -89,6 +88,12 @@ def messages(message):
     elif config.MESSAGE == 'ostanovka':
         ostanovka(message, message1)
 
+    elif config.MESSAGE == "otchot other":
+        otchet_other_hotel(message,message1)
+
+    elif config.MESSAGE == "edit other":
+        edit_other_hotel(message,message1)
+
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('f'))
 def fin_btn(call):
@@ -105,6 +110,7 @@ def fin_btn(call):
         config.CHILD_NUM, config.CHILD_PRICE,str(int(config.PRICE)*int(config.NUM_OF_PERSONS)\
         + int(config.CHILD_PRICE)*int(config.CHILD_NUM)), config.TEL_NUM, config.NAME \
         ,config.DATE]
+        print(len(to_append))
         if config.HOTEL not in config.hotels:
             to_append.append(config.HOTEL)
         a_series = pd.Series(to_append, index = data_frame.columns)
@@ -150,11 +156,11 @@ def hotels(call):
 
     elif call.data == 'h bumerang':
         config.HOTEL = "Бумеранг"
-        config.OSTANOVKA = "Южное Взморе"
+        config.OSTANOVKA = "Южное Взморье"
 
     elif call.data == 'h havana':
         config.HOTEL = "Гавана"
-        config.OSTANOVKA = "Южное Взморе"
+        config.OSTANOVKA = "Южное Взморье"
 
     elif call.data == 'h tolasso':
         config.HOTEL = "Толассо"
@@ -166,7 +172,7 @@ def hotels(call):
 
     elif call.data == 'h orange_house':
         config.HOTEL = "Оранж Хаус"
-        config.OSTANOVKA = "Сонатории Адлер"
+        config.OSTANOVKA = "Санатория Адлер"
 
     elif call.data == 'h clever':
         config.HOTEL = "Клевер"
@@ -199,7 +205,7 @@ def tours(call):
         config.TOUR = "Золотое кольцо Абхазии"
 
     elif call.data == 't kp':
-        config.TOUR = 'Крассная Поляна'
+        config.TOUR = 'Красная Поляна'
 
     elif call.data == 't jeep':
         config.TOUR = 'Джип тур Абхазия'
@@ -271,11 +277,11 @@ def delete_hotels(call):
 
     elif call.data == 'dh bumerang':
         config.HOTEL = "Бумеранг"
-        config.OSTANOVKA = "Южное Взморе"
+        config.OSTANOVKA = "Южное Взморье"
 
     elif call.data == 'dh havana':
         config.HOTEL = "Гавана"
-        config.OSTANOVKA = "Южное Взморе"
+        config.OSTANOVKA = "Южное Взморье"
 
     elif call.data == 'dh tolasso':
         config.HOTEL = "Толассо"
@@ -287,7 +293,7 @@ def delete_hotels(call):
 
     elif call.data == 'dh orange_house':
         config.HOTEL = "Оранж Хаус"
-        config.OSTANOVKA = "Сонатории Адлер"
+        config.OSTANOVKA = "Санатория Адлер"
 
     elif call.data == 'dh clever':
         config.HOTEL = "Клевер"
@@ -301,10 +307,15 @@ def delete_hotels(call):
         config.HOTEL = "Буржуазия"
         config.OSTANOVKA = "Знания"
 
-    config.TEXT = config.TEXT + "\n" + "Заявку с отеля " + config.HOTEL
-    bot.send_message(call.message.chat.id, text=config.TEXT)
-    config.MESSAGE = "del date"
-    bot.send_message(call.message.chat.id, text="Выбирите дату в формате (27.09,1.12)")
+    elif call.data == 'dh other':
+        bot.send_message(call.message.chat.id, text="Выбирите другой отель")
+        config.MESSAGE = "edit other"
+
+    if call.data != 'dh other':    
+        config.TEXT = config.TEXT + "\n" + "Заявку с отеля " + config.HOTEL
+        bot.send_message(call.message.chat.id, text=config.TEXT)
+        config.MESSAGE = "del date"
+        bot.send_message(call.message.chat.id, text="Выбирите дату в формате (27.09,1.12)")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('df'))
@@ -391,7 +402,7 @@ def edit_tour(call):
         config.TOUR = "Золотое кольцо Абхазии"
 
     elif call.data == 'dt kp':
-        config.TOUR = 'Крассная Поляна'
+        config.TOUR = 'Красная Поляна'
 
     elif call.data == 'dt jeep':
         config.TOUR = 'Джип тур Абхазия'
@@ -521,9 +532,14 @@ def otchet_hotel(call):
     elif call.data == 'oh burjuazia':
         config.HOTEL = "Буржуазия"
 
-    bot.send_message(call.message.chat.id,\
-        text = "Выбирите промежуток дат (пример 27.09-28.09,1.9-1.10)")
-    config.MESSAGE = "Date promej"
+    elif call.data == 'oh other':
+        bot.send_message(call.message.chat.id, text="Выбирите другой отель")
+        config.MESSAGE = "otchot other"
+
+    if call.data != 'oh other':
+        bot.send_message(call.message.chat.id,\
+            text = "Выбирите промежуток дат (пример 27.09-28.09,1.9-1.10)")
+        config.MESSAGE = "Date promej"
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('ok'))
@@ -683,6 +699,23 @@ def otchet(message):
     keyb_och = otchet_buttons('ol')
     bot.send_message(message.from_user.id, \
         text="Выбирите как хотите получить отчет", reply_markup=keyb_och)
+
+
+def otchet_other_hotel(message,message1):
+    """ othcet other hotel """
+    config.HOTEL = message1
+    config.TEXT = config.TEXT + "\n" + "Заявку с отеля " + config.HOTEL
+    bot.send_message(message.chat.id, text=config.TEXT)
+    config.MESSAGE = "del date"
+    bot.send_message(message.chat.id, text="Выбирите дату в формате (27.09,1.12)")
+
+
+def edit_other_hotel(message,message1):
+    """ edit other hotel """
+    config.HOTEL = message1
+    bot.send_message(message.chat.id,\
+    text = "Выбирите промежуток дат (пример 27.09-28.09,1.9-1.10)")
+    config.MESSAGE = "Date promej"
 
 
 def ostanovka(message,message1):
